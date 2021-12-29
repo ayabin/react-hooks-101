@@ -1,6 +1,7 @@
 import React,{useReducer,useState} from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import reducer from '../reducers';
+import Event from './Event';
 
 const App=()=>{
   const [state,dispatch]=useReducer(reducer,[]);
@@ -8,7 +9,6 @@ const App=()=>{
   const [body,setBody]=useState('');
   const addEvent=e=>{
     e.preventDefault();
-    console.log({title,body});
     dispatch({
       type:'CREATE_EVENT',
       title,
@@ -17,7 +17,7 @@ const App=()=>{
     setTitle('');
     setBody('');
   }
-  console.log(state);
+  
   return (
     <div className='container-fluid'>
       <h4>イベント作成フォーム</h4>
@@ -32,6 +32,7 @@ const App=()=>{
         </div>
         <button className='btn btn-primary' onClick={addEvent}>イベントを作成する</button>
         <button className='btn btn-danger'>全てのイベントを削除する</button>
+        <button className='btn btn-danger'>全てのイベントを削除する</button>
       </form>
       <h4>イベント一覧</h4>
       <table className='table table-hover'>
@@ -43,7 +44,9 @@ const App=()=>{
             <th></th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {state.map((event,index)=>(<Event key={index} event={event} dispatch={dispatch} />))}
+        </tbody>
       </table>
     </div>
   );
